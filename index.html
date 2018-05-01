@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <div class="dropdown">
+        <div>
+            <label> Category Name</label>
+            <input id="categoryname" type="text" name="category" />
+        </div>
+        <div>
+            <label> Parent Category</label>
+            <select id="dropdown"></select>
+        </div>
+        <button id="addCateory">Add Catgeory</button>
+    </div>
+
+    <div class="tree">
+        <ui id="categoryTree"></ui>
+        <button id="deleteNode">Delete</button>
+    </div>
+    <footer>
+        <script src="index.js"></script>
+        <script>
+            var category = new category();
+
+            window.onload = function () {
+                category.load();
+                category.tree();
+            };
+            document.getElementById("addCateory").addEventListener("click",
+                function () {
+                    let select = document.getElementById("dropdown");
+                    let categoryName = document.getElementById("categoryname");
+                    if (categoryName.value.length <= 0) {
+                        alert("PLease enter valid values");
+                        return;
+                    }
+
+                    category.add(select.options[select.selectedIndex].value, categoryName.value);
+                    categoryName.value = '';
+                });
+            document.getElementById("deleteNode").addEventListener("click",
+                function () {
+                    var selectedCategories = [];
+                    var checkedBoxes = document.querySelectorAll('input[name=mychk]:checked');
+                    checkedBoxes.forEach(x => {
+                        selectedCategories.push(Number(x.id));
+                    });
+                    category.delete(selectedCategories);
+                });
+        </script>
+    </footer>
+</body>
+</html>
